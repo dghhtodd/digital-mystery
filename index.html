@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>數字密碼破譯</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/css.gg/icons/all.css" rel="stylesheet">
+</head>
+<body>
+    <header class="game-header">
+        <h1><i class="gg-lock"></i> 密碼破解</h1>
+        <div class="subtitle">
+            <i class="gg-info"></i> 輸入6位不重複數字
+        </div>
+        <button class="new-game-btn" onclick="resetGame()">新遊戲</button>
+    </header>
+    <div class="game-container">
+        <!-- 提示信息区 -->
+        <div class="instructions">
+            <h2>遊戲規則</h2>
+            <p>密碼為6位不重複數字</p>
+            <div class="legend">
+                <div><span class="correct">✔</span> 數字正確且位置正確</div>
+                <div><span class="exist">▲</span> 數字正確但位置錯誤</div>
+                <div><span class="wrong">✖</span> 數字不存在</div>
+            </div>
+        </div>
+
+        <!-- 输入区域 -->
+        <div class="guess-area" id="guessArea"></div>
+
+        <!-- 数字键盘 -->
+        <div class="keypad">
+            <div class="number-keys">
+                <!-- 修正为纯HTML数字按钮 -->
+                <button class="num-btn" onclick="inputNum(1)">1</button>
+                <button class="num-btn" onclick="inputNum(2)">2</button>
+                <button class="num-btn" onclick="inputNum(3)">3</button>
+                <button class="num-btn" onclick="inputNum(4)">4</button>
+                <button class="num-btn" onclick="inputNum(5)">5</button>
+                <button class="num-btn" onclick="inputNum(6)">6</button>
+                <button class="num-btn" onclick="inputNum(7)">7</button>
+                <button class="num-btn" onclick="inputNum(8)">8</button>
+                <button class="num-btn" onclick="inputNum(9)">9</button>
+                <button class="num-btn" onclick="inputNum(0)">0</button>
+                <button class="clear-btn" onclick="clearOne()">← 刪一個</button>
+                <button class="clear-all-btn" onclick="clearAll()">全清</button>
+                <button class="enter-btn" onclick="submitGuess()">輸入</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-tips">
+        <div class="rotate-warning">請保持手機直立遊玩</div>
+        <!-- 其他内容 -->
+    </div>
+
+    <div id="qrcode" style="position: fixed; bottom: 10px; right: 10px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+    <script>
+    new QRCode(document.getElementById("qrcode"), {
+        text: window.location.href,
+        width: 100,
+        height: 100
+    });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

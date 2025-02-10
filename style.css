@@ -1,0 +1,541 @@
+/* 全新颜色主题 */
+:root {
+    --bg-color: #1a1a1a;
+    --primary: #7F5AF0;
+    --secondary: #2CB67D;
+    --accent: #E45858;
+    --text: #FFFFFF;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+}
+
+.game-container {
+    max-width: 600px;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    margin: 10px auto;
+    padding-bottom: 200px;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.guess-area {
+    flex: 1;
+    will-change: transform;
+    overscroll-behavior: contain;
+    display: grid;
+    gap: 3px;
+    margin: 20px 0 30px;
+    scroll-margin-bottom: 100px; /* 滚动时保留键盘空间 */
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-bottom: 80px; /* 增加底部留白 */
+}
+
+/* 输入区域 */
+.guess-area {
+    display: grid;
+    gap: 5px;
+    margin: 20px 0;
+}
+
+.guess-row {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin: 0;
+}
+
+.guess-cell {
+    width: 55px;
+    height: 55px;
+    border: 2px solid var(--primary);
+    border-radius: 5px;
+    text-align: center;
+    font-size: 20px;
+    background: transparent;
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+/* 当前输入行高亮 */
+.active-row .guess-cell {
+    border-color: #4CAF50;
+    border-width: 2px;
+    animation: pulse 1s infinite;
+}
+
+/* 反馈标识 */
+.guess-cell::after {
+    position: absolute;
+    margin-left: 2px;
+}
+
+.correct {
+    background: var(--secondary) !important;
+    position: relative;
+    border-color: var(--secondary) !important;
+}
+
+.exist {
+    background: var(--accent) !important;
+    position: relative;
+    border-color: var(--accent) !important;
+}
+
+.wrong {
+    background: #ff0000 !important; /* 亮红色表示错误 */
+}
+
+/* 数字键盘 */
+.keypad {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    position: relative;
+    top: 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+    max-width: 450px; /* 增加50px */
+    overflow-x: hidden;
+    flex-shrink: 0;
+    touch-action: none; /* 禁用浏览器默认触摸行为 */
+    overflow: hidden; /* 防止滑动时内容溢出 */
+    z-index: 2;
+}
+
+.number-keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+
+.num-btn {
+    width: 16%;
+    height: 50px;
+    font-size: 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    transition: all 0.2s ease;
+}
+
+/* 操作按钮 */
+.clear-btn, .clear-all-btn, .enter-btn {
+    width: 40%;
+    height: 45px;
+    font-size: 16px;
+    margin: 10px auto;
+    grid-column: span 2;
+}
+
+/* 提示信息 */
+.instructions {
+    background: rgba(0,0,0,0.5);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+.legend span {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+}
+
+.submitted .guess-cell {
+    border-color: #666 !important;
+    opacity: 0.6;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .num-btn {
+        width: 65px;
+        height: 65px;
+        font-size: 22px;
+    }
+    .keypad {
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+    }
+    .number-keys {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .game-container {
+        padding-bottom: 300px; /* 增加底部空间 */
+    }
+    .guess-row {
+        gap: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .guess-row {
+        gap: 3px;
+        margin: 0;
+    }
+    
+    .guess-cell {
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
+        margin: 0;
+    }
+    
+    .keypad {
+        top: 10px; /* 保持与桌面端一致 */
+    }
+    
+    .number-keys {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+        padding: 0 5px;
+    }
+    
+    .num-btn {
+        width: 17%;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .clear-btn, .clear-all-btn, .enter-btn {
+        width: 45%;
+        height: 45px;
+        font-size: 16px;
+        margin: 5px 1%;
+        grid-column: span 4;
+    }
+    
+    .instructions {
+        padding: 10px;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+    
+    .game-container {
+        padding-bottom: 50px;
+        padding-top: 15px;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        max-width: 95%; /* 增加两侧留白 */
+    }
+    
+    .guess-area {
+        flex: 1;
+        overflow-y: auto;
+        max-height: 50vh;
+    }
+    
+    body {
+        overflow-y: auto;
+    }
+}
+
+/* 防止手机点击高亮 */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.num-btn:active {
+    transform: scale(0.95);
+    filter: brightness(1.2);
+}
+
+.enter-btn:active, .clear-btn:active {
+    opacity: 0.8;
+}
+
+/* 标题样式 */
+.game-header {
+    text-align: center;
+    padding: 25px;
+    background: var(--primary);
+    color: white;
+    margin-bottom: 20px !important;
+    position: relative;
+    border-radius: 15px;
+}
+
+.game-header h1 {
+    font-size: 2em;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3),
+                -1px -1px 2px rgba(255,255,255,0.2);
+}
+
+.subtitle {
+    font-size: 1em;
+    opacity: 0.9;
+    margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+    .game-header h1 {
+        font-size: 2em;
+    }
+    .subtitle {
+        font-size: 1em;
+    }
+}
+
+/* 新游戏按钮 */
+.new-game-btn {
+    position: absolute;
+    right: 25px; /* 右移5px */
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 20px;
+    background: #4CAF50;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.new-game-btn:hover {
+    background: #45a049;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.new-game-btn:active {
+    transform: translateY(-50%) scale(0.95);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 480px) {
+    .new-game-btn {
+        position: static;
+        margin-top: 10px;
+        transform: none;
+        width: 80%;
+        padding: 10px;
+    }
+}
+
+/* 竖屏提示 */
+.rotate-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #ff4444;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    z-index: 100;
+}
+
+@media (max-width: 480px) and (orientation: landscape) {
+    .rotate-warning {
+        display: block;
+    }
+    body {
+        transform: rotate(-90deg);
+        transform-origin: left top;
+        width: 100vh;
+        overflow-x: hidden;
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+}
+
+/* 小屏幕优化 */
+@media (max-width: 360px) {
+    .num-btn {
+        font-size: 18px;
+        height: 55px;
+    }
+    .clear-btn, .clear-all-btn, .enter-btn {
+        font-size: 16px;
+    }
+}
+
+body::after {
+    content: 'desktop';
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    color: red;
+    z-index: 9999;
+}
+
+@media (max-width: 480px) {
+    body::after {
+        content: 'mobile';
+    }
+}
+
+/* 恢复反馈标识 */
+.correct::after, .exist::after, .wrong::after {
+    margin-left: 2px;
+    transform: scale(0.7);
+}
+
+/* 恢复聚焦效果 */
+.guess-cell:focus {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--primary);
+}
+
+/* 反馈标识图形 */
+.correct::after {
+    content: '✓';
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    font-size: 8px;
+    color: rgba(0,0,0,0.7);
+}
+
+.exist::after {
+    content: '◯';
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    font-size: 8px;
+    color: rgba(0,0,0,0.7);
+}
+
+.wrong::after {
+    content: '✕';
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    font-size: 8px;
+    color: rgba(0,0,0,0.7);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* 移动端优化 */
+@media (max-width: 480px) {
+    .correct::after,
+    .exist::after,
+    .wrong::after {
+        right: 1px;
+        bottom: 1px;
+        font-size: 8px;
+    }
+}
+
+/* 优化触控区域 */
+@media (hover: none) {
+    .guess-cell {
+        min-width: 35px; /* 保持最小可触控尺寸 */
+    }
+}
+
+/* 移动端动态调整 */
+@media (max-height: 600px) {
+    .keypad {
+        top: 30px !important;
+    }
+    .game-container {
+        padding-bottom: 180px;
+    }
+}
+
+/* 紧凑模式调整 */
+.compact-mode {
+    zoom: 0.9; /* 整体缩放90% */
+}
+
+/* 触控优化 */
+@media (hover: none) {
+    .num-btn {
+        min-width: 40px; /* 保持最小触控区域 */
+    }
+}
+
+/* 宽屏优化 */
+@media (min-width: 1200px) {
+    .game-container {
+        max-width: 800px !important;
+    }
+    .keypad {
+        max-width: 500px;
+    }
+}
+
+/* 滑动反馈样式 */
+.num-btn.active-swipe {
+    transform: scale(1.1);
+    background: #4CAF50 !important;
+    transition: all 0.1s ease;
+}
+
+/* 按钮触控优化 */
+.num-btn {
+    position: relative;
+    z-index: 1;
+}
+.num-btn::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+}
+
+.num-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(127,90,240,0.3);
+}
+
+/* 仅限移动端横屏限制 */
+@media (max-width: 480px) and (orientation: landscape) {
+    body {
+        transform: rotate(0) !important;
+        overflow: hidden !important;
+    }
+    
+    .rotate-warning {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5em;
+        height: 100vh;
+        background: rgba(0,0,0,0.9);
+    }
+    
+    .game-container,
+    .keypad,
+    .mobile-tips:not(.rotate-warning) {
+        display: none !important;
+    }
+} 
